@@ -10,8 +10,6 @@
         body {
             text-align: center;
             font-family: 'Dancing Script', cursive;
-            margin: 0;
-            padding: 0;
             background-color: #ffe6e6;
             background-image: url('https://www.transparenttextures.com/patterns/heart-pattern.png');
             color: #d63384;
@@ -36,11 +34,6 @@
             border-radius: 25px;
             transition: all 0.3s;
             position: absolute;
-        }
-        #button-container {
-            position: relative;
-            width: 100%;
-            height: 200px;
         }
         #yesBtn {
             background-color: #ff4d79;
@@ -71,10 +64,8 @@
     <h1>Will you be my Valentine? ❤️</h1>
     <img id="gif" src="https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif" alt="Cute Penguin GIF">
     
-    <div id="button-container">
-        <button id="yesBtn" class="btn">Yes 💘</button>
-        <button id="noBtn" class="btn">No 😢</button>
-    </div>
+    <button id="yesBtn" class="btn">Yes 💘</button>
+    <button id="noBtn" class="btn">No 😢</button>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -91,12 +82,11 @@
             let noBtn = document.getElementById("noBtn");
             let yesBtn = document.getElementById("yesBtn");
 
-            function moveButtonRandomly(button) {
+            function moveButton(button) {
                 let maxX = window.innerWidth - button.offsetWidth - 50;
                 let maxY = window.innerHeight - button.offsetHeight - 50;
-
-                let newX = Math.max(50, Math.random() * maxX);
-                let newY = Math.max(100, Math.random() * maxY);
+                let newX = Math.random() * maxX;
+                let newY = Math.random() * maxY;
 
                 button.style.position = "absolute";
                 button.style.left = `${newX}px`;
@@ -107,8 +97,8 @@
                 gifIndex = (gifIndex + 1) % gifs.length;
                 document.getElementById("gif").src = gifs[gifIndex];
 
-                moveButtonRandomly(noBtn);
-                moveButtonRandomly(yesBtn);
+                moveButton(noBtn);
+                moveButton(yesBtn);
             });
 
             yesBtn.addEventListener("click", function () {
