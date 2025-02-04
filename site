@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin-top: 50px;
+        }
+        img {
+            width: 300px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Will you be my Valentine? ❤️</h1>
+    <img id="gif" src="https://media.giphy.com/media/3ohhwytHcusSCXXOUg/giphy.gif" alt="Cute GIF">
+    
+    <div>
+        <button id="yesBtn">Yes</button>
+        <button id="noBtn">No</button>
+    </div>
+
+    <script>
+        const gifs = [
+            "https://media.giphy.com/media/3ohhwytHcusSCXXOUg/giphy.gif",
+            "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
+            "https://media.giphy.com/media/l4FGpP4lxGGgK5o5O/giphy.gif",
+            "https://media.giphy.com/media/XIqCQx02E1U9W/giphy.gif",
+            "https://media.giphy.com/media/jUwpNzg9IcyrK/giphy.gif",
+            "https://media.giphy.com/media/xT0GqeSlGSRQut9jwM/giphy.gif"
+        ];
+
+        let gifIndex = 0;
+        document.getElementById("noBtn").addEventListener("click", function() {
+            gifIndex = (gifIndex + 1) % gifs.length;
+            document.getElementById("gif").src = gifs[gifIndex];
+        });
+
+        document.getElementById("yesBtn").addEventListener("click", function() {
+            document.body.innerHTML = `
+                <h1>Yay! 💖</h1>
+                <img src="https://media.giphy.com/media/l3q2Ip6l1YOL5p9bW/giphy.gif" alt="Happy GIF">
+                <p>Best decision ever! 💘</p>
+            `;
+        });
+    </script>
+
+</body>
+</html>
