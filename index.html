@@ -3,44 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Be My Valentine?</title>
+    <title>Be My Valentine? ❤️</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&display=swap');
+
         body {
             text-align: center;
-            font-family: Arial, sans-serif;
+            font-family: 'Dancing Script', cursive;
+            margin: 0;
+            padding: 0;
+            background-color: #ffe6e6;
+            background-image: url('https://www.transparenttextures.com/patterns/heart-pattern.png');
+            color: #d63384;
+        }
+        h1 {
+            font-size: 3em;
             margin-top: 50px;
         }
         img {
             width: 300px;
             height: auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             margin-bottom: 20px;
         }
-        button {
-            padding: 10px 20px;
-            font-size: 18px;
-            margin: 10px;
+        .btn {
+            padding: 15px 30px;
+            font-size: 20px;
+            border: none;
             cursor: pointer;
+            border-radius: 25px;
+            transition: all 0.3s;
+        }
+        #yesBtn {
+            background-color: #ff4d79;
+            color: white;
+            font-family: 'Pacifico', cursive;
+        }
+        #yesBtn:hover {
+            background-color: #e60050;
+        }
+        #noBtn {
+            background-color: white;
+            color: #ff4d79;
+            border: 2px solid #ff4d79;
+            font-family: 'Pacifico', cursive;
+        }
+        #noBtn:hover {
+            background-color: #ff4d79;
+            color: white;
         }
     </style>
 </head>
 <body>
 
     <h1>Will you be my Valentine? ❤️</h1>
-    <img id="gif" src="https://media.giphy.com/media/3ohhwytHcusSCXXOUg/giphy.gif" alt="Cute GIF">
+    <img id="gif" src="https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif" alt="Cute Penguin GIF">
     
     <div>
-        <button id="yesBtn">Yes</button>
-        <button id="noBtn">No</button>
+        <button id="yesBtn" class="btn">Yes 💘</button>
+        <button id="noBtn" class="btn">No 😢</button>
     </div>
 
     <script>
         const gifs = [
-            "https://media.giphy.com/media/3ohhwytHcusSCXXOUg/giphy.gif",
-            "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
-            "https://media.giphy.com/media/l4FGpP4lxGGgK5o5O/giphy.gif",
-            "https://media.giphy.com/media/XIqCQx02E1U9W/giphy.gif",
-            "https://media.giphy.com/media/jUwpNzg9IcyrK/giphy.gif",
-            "https://media.giphy.com/media/xT0GqeSlGSRQut9jwM/giphy.gif"
+            "https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif",
+            "https://media.giphy.com/media/KztT8S4HEGtQQ/giphy.gif",
+            "https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif",
+            "https://media.giphy.com/media/l0MYKDrj6SXHzM6Ac/giphy.gif",
+            "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif",
+            "https://media.giphy.com/media/5xtDarIN81U0KvlnPfy/giphy.gif"
         ];
 
         let gifIndex = 0;
@@ -51,9 +83,47 @@
 
         document.getElementById("yesBtn").addEventListener("click", function() {
             document.body.innerHTML = `
-                <h1>Yay! 💖</h1>
-                <img src="https://media.giphy.com/media/l3q2Ip6l1YOL5p9bW/giphy.gif" alt="Happy GIF">
-                <p>Best decision ever! 💘</p>
+                <h1>Yay! You made my heart flutter! 💖</h1>
+                <img src="https://media.giphy.com/media/l3vR9nZZL9E2yyMQ8/giphy.gif" alt="Happy Penguin GIF">
+                <p>Best decision ever! 🐧💘</p>
+                <canvas id="confetti"></canvas>
+                <script>
+                    const confettiCanvas = document.getElementById('confetti');
+                    const confettiCtx = confettiCanvas.getContext('2d');
+                    confettiCanvas.width = window.innerWidth;
+                    confettiCanvas.height = window.innerHeight;
+
+                    const particles = [];
+                    function createParticle() {
+                        return {
+                            x: Math.random() * confettiCanvas.width,
+                            y: Math.random() * confettiCanvas.height,
+                            r: Math.random() * 6 + 2,
+                            color: 'hsl(' + Math.random() * 360 + ', 100%, 70%)',
+                            speedX: Math.random() * 2 - 1,
+                            speedY: Math.random() * 2 + 1
+                        };
+                    }
+
+                    for (let i = 0; i < 100; i++) {
+                        particles.push(createParticle());
+                    }
+
+                    function drawParticles() {
+                        confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+                        particles.forEach(p => {
+                            confettiCtx.fillStyle = p.color;
+                            confettiCtx.beginPath();
+                            confettiCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                            confettiCtx.fill();
+                            p.x += p.speedX;
+                            p.y += p.speedY;
+                            if (p.y > confettiCanvas.height) p.y = 0;
+                        });
+                        requestAnimationFrame(drawParticles);
+                    }
+                    drawParticles();
+                </script>
             `;
         });
     </script>
