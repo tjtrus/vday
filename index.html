@@ -16,6 +16,7 @@
             background-image: url('https://www.transparenttextures.com/patterns/heart-pattern.png');
             color: #d63384;
             overflow: hidden;
+            position: relative;
         }
         h1 {
             font-size: 3em;
@@ -72,79 +73,85 @@
     </div>
 
     <script>
-        const gifs = [
-            "https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif",
-            "https://media.giphy.com/media/KztT8S4HEGtQQ/giphy.gif",
-            "https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif",
-            "https://media.giphy.com/media/l0MYKDrj6SXHzM6Ac/giphy.gif",
-            "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif",
-            "https://media.giphy.com/media/5xtDarIN81U0KvlnPfy/giphy.gif"
-        ];
+        document.addEventListener("DOMContentLoaded", function () {
+            const gifs = [
+                "https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif",
+                "https://media.giphy.com/media/KztT8S4HEGtQQ/giphy.gif",
+                "https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif",
+                "https://media.giphy.com/media/l0MYKDrj6SXHzM6Ac/giphy.gif",
+                "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif",
+                "https://media.giphy.com/media/5xtDarIN81U0KvlnPfy/giphy.gif"
+            ];
 
-        let gifIndex = 0;
-        let noBtn = document.getElementById("noBtn");
-        let yesBtn = document.getElementById("yesBtn");
+            let gifIndex = 0;
+            let noBtn = document.getElementById("noBtn");
+            let yesBtn = document.getElementById("yesBtn");
 
-        noBtn.addEventListener("click", function() {
-            gifIndex = (gifIndex + 1) % gifs.length;
-            document.getElementById("gif").src = gifs[gifIndex];
+            function moveButtonRandomly(button) {
+                let maxX = window.innerWidth - button.offsetWidth - 50;
+                let maxY = window.innerHeight - button.offsetHeight - 50;
 
-            // Move buttons randomly
-            let x = Math.random() * (window.innerWidth - 150);
-            let y = Math.random() * (window.innerHeight - 100);
-            noBtn.style.left = `${x}px`;
-            noBtn.style.top = `${y}px`;
+                let newX = Math.max(20, Math.random() * maxX);
+                let newY = Math.max(20, Math.random() * maxY);
 
-            x = Math.random() * (window.innerWidth - 150);
-            y = Math.random() * (window.innerHeight - 100);
-            yesBtn.style.left = `${x}px`;
-            yesBtn.style.top = `${y}px`;
-        });
+                button.style.position = "absolute";
+                button.style.left = `${newX}px`;
+                button.style.top = `${newY}px`;
+            }
 
-        yesBtn.addEventListener("click", function() {
-            document.body.innerHTML = `
-                <h1>Yay! You made my heart flutter! 💖</h1>
-                <img src="https://media.giphy.com/media/l3vR9nZZL9E2yyMQ8/giphy.gif" alt="Happy Penguin GIF">
-                <p>Best decision ever! 🐧💘</p>
-                <canvas id="confetti"></canvas>
-                <script>
-                    const canvas = document.getElementById('confetti');
-                    const ctx = canvas.getContext('2d');
-                    canvas.width = window.innerWidth;
-                    canvas.height = window.innerHeight;
+            noBtn.addEventListener("click", function () {
+                gifIndex = (gifIndex + 1) % gifs.length;
+                document.getElementById("gif").src = gifs[gifIndex];
 
-                    const particles = [];
-                    function createParticle() {
-                        return {
-                            x: Math.random() * canvas.width,
-                            y: Math.random() * canvas.height,
-                            r: Math.random() * 6 + 2,
-                            color: 'hsl(' + Math.random() * 360 + ', 100%, 70%)',
-                            speedX: Math.random() * 2 - 1,
-                            speedY: Math.random() * 2 + 1
-                        };
-                    }
+                moveButtonRandomly(noBtn);
+                moveButtonRandomly(yesBtn);
+            });
 
-                    for (let i = 0; i < 100; i++) {
-                        particles.push(createParticle());
-                    }
+            yesBtn.addEventListener("click", function () {
+                document.body.innerHTML = `
+                    <h1>Yay! You made my heart flutter! 💖</h1>
+                    <img src="https://media.giphy.com/media/l3vR9nZZL9E2yyMQ8/giphy.gif" alt="Happy Penguin GIF">
+                    <p>Best decision ever! 🐧💘</p>
+                    <canvas id="confetti"></canvas>
+                    <script>
+                        const canvas = document.getElementById('confetti');
+                        const ctx = canvas.getContext('2d');
+                        canvas.width = window.innerWidth;
+                        canvas.height = window.innerHeight;
 
-                    function drawParticles() {
-                        ctx.clearRect(0, 0, canvas.width, canvas.height);
-                        particles.forEach(p => {
-                            ctx.fillStyle = p.color;
-                            ctx.beginPath();
-                            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                            ctx.fill();
-                            p.x += p.speedX;
-                            p.y += p.speedY;
-                            if (p.y > canvas.height) p.y = 0;
-                        });
-                        requestAnimationFrame(drawParticles);
-                    }
-                    drawParticles();
-                </script>
-            `;
+                        const particles = [];
+                        function createParticle() {
+                            return {
+                                x: Math.random() * canvas.width,
+                                y: Math.random() * canvas.height,
+                                r: Math.random() * 6 + 2,
+                                color: 'hsl(' + Math.random() * 360 + ', 100%, 70%)',
+                                speedX: Math.random() * 2 - 1,
+                                speedY: Math.random() * 2 + 1
+                            };
+                        }
+
+                        for (let i = 0; i < 100; i++) {
+                            particles.push(createParticle());
+                        }
+
+                        function drawParticles() {
+                            ctx.clearRect(0, 0, canvas.width, canvas.height);
+                            particles.forEach(p => {
+                                ctx.fillStyle = p.color;
+                                ctx.beginPath();
+                                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                                ctx.fill();
+                                p.x += p.speedX;
+                                p.y += p.speedY;
+                                if (p.y > canvas.height) p.y = 0;
+                            });
+                            requestAnimationFrame(drawParticles);
+                        }
+                        drawParticles();
+                    </script>
+                `;
+            });
         });
     </script>
 
