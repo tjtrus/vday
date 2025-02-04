@@ -16,7 +16,6 @@
             background-image: url('https://www.transparenttextures.com/patterns/heart-pattern.png');
             color: #d63384;
             overflow: hidden;
-            position: relative;
         }
         h1 {
             font-size: 3em;
@@ -38,11 +37,16 @@
             transition: all 0.3s;
             position: absolute;
         }
+        #button-container {
+            position: relative;
+            width: 100%;
+            height: 200px;
+        }
         #yesBtn {
             background-color: #ff4d79;
             color: white;
             font-family: 'Pacifico', cursive;
-            left: 45%;
+            left: 40%;
             top: 65%;
         }
         #yesBtn:hover {
@@ -67,7 +71,7 @@
     <h1>Will you be my Valentine? ❤️</h1>
     <img id="gif" src="https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif" alt="Cute Penguin GIF">
     
-    <div>
+    <div id="button-container">
         <button id="yesBtn" class="btn">Yes 💘</button>
         <button id="noBtn" class="btn">No 😢</button>
     </div>
@@ -91,8 +95,8 @@
                 let maxX = window.innerWidth - button.offsetWidth - 50;
                 let maxY = window.innerHeight - button.offsetHeight - 50;
 
-                let newX = Math.max(20, Math.random() * maxX);
-                let newY = Math.max(20, Math.random() * maxY);
+                let newX = Math.max(50, Math.random() * maxX);
+                let newY = Math.max(100, Math.random() * maxY);
 
                 button.style.position = "absolute";
                 button.style.left = `${newX}px`;
