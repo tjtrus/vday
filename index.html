@@ -15,6 +15,7 @@
             background-color: #ffe6e6;
             background-image: url('https://www.transparenttextures.com/patterns/heart-pattern.png');
             color: #d63384;
+            overflow: hidden;
         }
         h1 {
             font-size: 3em;
@@ -34,11 +35,14 @@
             cursor: pointer;
             border-radius: 25px;
             transition: all 0.3s;
+            position: absolute;
         }
         #yesBtn {
             background-color: #ff4d79;
             color: white;
             font-family: 'Pacifico', cursive;
+            left: 45%;
+            top: 65%;
         }
         #yesBtn:hover {
             background-color: #e60050;
@@ -48,6 +52,8 @@
             color: #ff4d79;
             border: 2px solid #ff4d79;
             font-family: 'Pacifico', cursive;
+            left: 55%;
+            top: 65%;
         }
         #noBtn:hover {
             background-color: #ff4d79;
@@ -76,28 +82,42 @@
         ];
 
         let gifIndex = 0;
-        document.getElementById("noBtn").addEventListener("click", function() {
+        let noBtn = document.getElementById("noBtn");
+        let yesBtn = document.getElementById("yesBtn");
+
+        noBtn.addEventListener("click", function() {
             gifIndex = (gifIndex + 1) % gifs.length;
             document.getElementById("gif").src = gifs[gifIndex];
+
+            // Move buttons randomly
+            let x = Math.random() * (window.innerWidth - 150);
+            let y = Math.random() * (window.innerHeight - 100);
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+
+            x = Math.random() * (window.innerWidth - 150);
+            y = Math.random() * (window.innerHeight - 100);
+            yesBtn.style.left = `${x}px`;
+            yesBtn.style.top = `${y}px`;
         });
 
-        document.getElementById("yesBtn").addEventListener("click", function() {
+        yesBtn.addEventListener("click", function() {
             document.body.innerHTML = `
                 <h1>Yay! You made my heart flutter! 💖</h1>
                 <img src="https://media.giphy.com/media/l3vR9nZZL9E2yyMQ8/giphy.gif" alt="Happy Penguin GIF">
                 <p>Best decision ever! 🐧💘</p>
                 <canvas id="confetti"></canvas>
                 <script>
-                    const confettiCanvas = document.getElementById('confetti');
-                    const confettiCtx = confettiCanvas.getContext('2d');
-                    confettiCanvas.width = window.innerWidth;
-                    confettiCanvas.height = window.innerHeight;
+                    const canvas = document.getElementById('confetti');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
 
                     const particles = [];
                     function createParticle() {
                         return {
-                            x: Math.random() * confettiCanvas.width,
-                            y: Math.random() * confettiCanvas.height,
+                            x: Math.random() * canvas.width,
+                            y: Math.random() * canvas.height,
                             r: Math.random() * 6 + 2,
                             color: 'hsl(' + Math.random() * 360 + ', 100%, 70%)',
                             speedX: Math.random() * 2 - 1,
@@ -110,15 +130,15 @@
                     }
 
                     function drawParticles() {
-                        confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
                         particles.forEach(p => {
-                            confettiCtx.fillStyle = p.color;
-                            confettiCtx.beginPath();
-                            confettiCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                            confettiCtx.fill();
+                            ctx.fillStyle = p.color;
+                            ctx.beginPath();
+                            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                            ctx.fill();
                             p.x += p.speedX;
                             p.y += p.speedY;
-                            if (p.y > confettiCanvas.height) p.y = 0;
+                            if (p.y > canvas.height) p.y = 0;
                         });
                         requestAnimationFrame(drawParticles);
                     }
